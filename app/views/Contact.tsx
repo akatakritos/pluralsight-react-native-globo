@@ -1,23 +1,110 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { FC, useReducer } from 'react';
+import { View, Text, StyleSheet, Alert } from 'react-native';
+import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
+import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from './Header';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+type Actions =
+  | { type: 'messageChanged'; payload: string }
+  | { type: 'nameChanged'; payload: string }
+  | { type: 'emailChanged'; payload: string }
+  | { type: 'clear' };
 
-export const Contact = () => {
+type ContactState = {
+  message: string;
+  name: string;
+  email: string;
+};
+
+function reducer(state: ContactState, action: Actions): ContactState {
+  switch (action.type) {
+    case 'messageChanged':
+      return { ...state, message: action.payload };
+    case 'nameChanged':
+      return { ...state, name: action.payload };
+    case 'emailChanged':
+      return { ...state, email: action.payload };
+    case 'clear':
+      return { ...state, message: '', email: '', name: '' };
+  }
+}
+
+interface ContactProps extends NavigationInjectedProps {}
+
+export const Contact: FC<ContactProps> = ({ navigation }) => {
+  const [state, dispatch] = useReducer(reducer, {
+    message: 'Enter Message',
+    name: 'Enter Name',
+    email: 'Enter your Email Address',
+  });
+
+  const sendMessage = () => {
+    Alert.alert(state.name, state.message);
+    navigation.goBack();
+  };
+
   return (
     <View style={styles.container}>
       <Header message="Press to Login" />
-      <Text style={{ flex: 8 }}>THe contact form will go here</Text>
-      <Text style={{ flex: 6 }}>More contact form will go here</Text>
+      <Text style={styles.heading}>Contact Us</Text>
+
+      <TextInput
+        style={styles.inputs}
+        onChangeText={(payload) => dispatch({ type: 'nameChanged', payload })}
+        value={state.name}
+      />
+
+      <TextInput
+        style={[styles.inputs, styles.multiInput]}
+        onChangeText={(payload) => dispatch({ type: 'messageChanged', payload })}
+        value={state.message}
+        multiline
+        numberOfLines={4}
+      />
+
+      <TextInput
+        style={styles.inputs}
+        onChangeText={(payload) => dispatch({ type: 'emailChanged', payload })}
+        value={state.email}
+      />
+
+      <TouchableHighlight onPress={sendMessage} underlayColor="#31e981">
+        <Text style={styles.buttons}>Send Message</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight onPress={() => dispatch({ type: 'clear' })} underlayColor="#31e981">
+        <Text style={styles.buttons}>Reset</Text>
+      </TouchableHighlight>
     </View>
   );
 };
 
-Contact.navigationOptions = {
+(Contact as any).navigationOptions = {
   headerShown: false,
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    paddingBottom: '45%',
+  },
+  heading: {
+    fontSize: 16,
+    flex: 1,
+  },
+  inputs: {
+    flex: 1,
+    width: '80%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+  },
+  multiInput: {
+    flex: 2,
+    paddingTop: 20,
+  },
+  buttons: {
+    marginTop: 15,
+    fontSize: 16,
+  },
+});
