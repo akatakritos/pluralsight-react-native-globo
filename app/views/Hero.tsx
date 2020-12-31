@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Image } from 'react-native';
-import laptop from './img/laptop2.jpg';
+const laptop = require('./img/laptop2.jpg');
 
 const styles = StyleSheet.create({
   heroImage: {
