@@ -14,7 +14,7 @@ export const Menu: FC<MenuProps> = ({ navigate }) => {
         <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Video')}>
           <Text style={styles.buttonText}>LESSONS</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonStyles} onPress={onPress}>
+        <TouchableOpacity style={styles.buttonStyles} onPress={() => navigate('Register')}>
           <Text style={styles.buttonText}>REGISTER</Text>
         </TouchableOpacity>
       </View>

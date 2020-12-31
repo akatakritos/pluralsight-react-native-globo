@@ -45,7 +45,7 @@ export const Contact: FC<ContactProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header message="Press to Login" />
+      <Header navigate={navigation.navigate} message="Press to Login" />
       <Text style={styles.heading}>Contact Us</Text>
 
       <TextInput
