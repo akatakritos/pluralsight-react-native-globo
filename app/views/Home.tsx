@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { NavigationInjectedProps } from 'react-navigation';
 import { Header } from './Header';
 import { Hero } from './Hero';
+import { Menu } from './Menu';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,12 +12,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Home = () => {
+interface HomeProps extends NavigationInjectedProps {}
+export const Home: FC<HomeProps> = (props) => {
+  const { navigate } = props.navigation;
+
   return (
     <View style={styles.container}>
       <Header message="Press to Login" />
       <Hero />
-      <Text style={{ flex: 6 }}>This is a new line</Text>
+      <Menu navigate={navigate} />
     </View>
   );
+};
+
+(Home as any).navigationOptions = {
+  headerShown: false,
 };
