@@ -1,10 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { FC, useEffect, useState } from 'react';
 import { Text, StyleSheet, View, Image, Alert } from 'react-native';
-import { State } from 'react-native-gesture-handler';
-import { NavigationInjectedProps } from 'react-navigation';
 import { NavigateFn } from './models';
-
+import { Auth } from './auth';
 const logo = require('./img/Globo_logo_REV.png');
 
 interface HeaderProps {
@@ -16,24 +13,17 @@ export const Header: FC<HeaderProps> = (props) => {
   const [user, setUser] = useState<string>(null);
 
   useEffect(() => {
-    AsyncStorage.getItem('userLoggedIn').then((result) => {
-      if (result === 'none') {
-        console.log('NO ONE LOGGED IN');
-      } else if (result === null) {
-        AsyncStorage.setItem('userLoggedIn', 'none').then(() => {
-          console.log('Set user to NONE');
-        });
-      } else {
-        console.log('logged in', result);
+    Auth.getCurrentUser().then((result) => {
+      if (result.type === 'LoggedIn') {
         setIsLoggedIn(true);
-        setUser(result);
+        setUser(result.username);
       }
     });
   }, []);
 
   const toggleUser = () => {
     if (isLoggedIn) {
-      AsyncStorage.setItem('userLoggedIn', 'none').then(() => {
+      Auth.logOut().then(() => {
         setIsLoggedIn(false);
         setUser(null);
         Alert.alert('User logged out');

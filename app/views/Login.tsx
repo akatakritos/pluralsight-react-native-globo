@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { FC, useReducer } from 'react';
 import { Alert, StyleSheet, View, Text } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 import { hideHeader } from './utils';
+import { Auth } from './auth';
 
 type LoginActions = { type: 'usernameUpdated'; username: string } | { type: 'passwordUpdated'; password: string };
 
@@ -38,23 +38,19 @@ export const Login: FC<LoginProps> = (props) => {
     } else if (!state.password) {
       Alert.alert('Please enter a password');
     } else {
-      AsyncStorage.getItem('userLoggedIn').then((loggedIn) => {
-        if (loggedIn !== 'none') {
+      Auth.getCurrentUser().then((userState) => {
+        if (userState.type === 'LoggedIn') {
           Alert.alert('Someone already logged on');
           props.navigation.navigate('Home');
         } else {
-          AsyncStorage.getItem(state.username).then((password) => {
-            if (password !== null) {
-              if (password !== state.password) {
-                Alert.alert('Password incorrect');
-              } else {
-                AsyncStorage.setItem('userLoggedIn', state.username).then(() => {
-                  Alert.alert(`${state.username} Logged In`);
-                  props.navigation.navigate('Home');
-                });
-              }
-            } else {
+          Auth.logIn(state.username, state.password).then((result) => {
+            if (result === 'PasswordMismatch') {
+              Alert.alert('Password incorrect');
+            } else if (result === 'NoAccount') {
               Alert.alert(`No account for ${state.username}`);
+            } else {
+              Alert.alert(`${state.username} Logged In`);
+              props.navigation.navigate('Home');
             }
           });
         }

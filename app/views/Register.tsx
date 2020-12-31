@@ -1,9 +1,9 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { FC, useReducer } from 'react';
 import { Alert, StyleSheet, View, Text } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 import { hideHeader } from './utils';
+import { Auth } from './auth';
 
 type RegisterActions =
   | { type: 'usernameUpdated'; username: string }
@@ -44,11 +44,11 @@ export const Register: FC<RegisterProps> = (props) => {
     } else if (state.password !== state.passwordConfirmation) {
       Alert.alert('Passwords do not match');
     } else {
-      AsyncStorage.getItem(state.username).then((result) => {
-        if (result !== null) {
+      Auth.userExists(state.username).then((exists) => {
+        if (exists) {
           Alert.alert(`${state.username} already exists`);
         } else {
-          AsyncStorage.setItem(state.username, state.password).then(() => {
+          Auth.register(state.username, state.password).then(() => {
             Alert.alert(`${state.username} account created.`);
             props.navigation.navigate('Home');
           });
