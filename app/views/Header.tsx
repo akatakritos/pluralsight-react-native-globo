@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, Image, Alert } from 'react-native';
 import { NavigateFn } from './models';
 import { Auth } from './auth';
 const logo = require('./img/Globo_logo_REV.png');
+import * as Result from './Result';
 
 interface HeaderProps {
   message: string;
