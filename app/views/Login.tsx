@@ -2,8 +2,8 @@ import React, { FC, useReducer } from 'react';
 import { Alert, StyleSheet, View, Text } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
-import { hideHeader } from './utils';
-import { Auth } from './auth';
+import { hideHeader } from '../utils';
+import { Auth } from '../auth';
 
 type LoginActions = { type: 'usernameUpdated'; username: string } | { type: 'passwordUpdated'; password: string };
 

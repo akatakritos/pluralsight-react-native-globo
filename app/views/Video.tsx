@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
-import { Loader, useLoadingState } from './LoadingState';
+import { Loader, useLoadingState } from '../LoadingState';
 import { searchVideos } from './youtube-client';
 
 interface VideoProps extends NavigationInjectedProps {}
