@@ -3,30 +3,20 @@ import { Text, StyleSheet, View, Image, Alert } from 'react-native';
 import { NavigateFn } from './models';
 import { Auth } from '../auth';
 const logo = require('./img/Globo_logo_REV.png');
-import * as Result from '../Result';
+import { useObservable, useObservableState } from 'observable-hooks';
+import { UserStore } from '../UserStore';
 
 interface HeaderProps {
   message: string;
   navigate: NavigateFn;
 }
 export const Header: FC<HeaderProps> = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<string>(null);
-
-  useEffect(() => {
-    Auth.getCurrentUser().then((result) => {
-      if (result.type === 'LoggedIn') {
-        setIsLoggedIn(true);
-        setUser(result.username);
-      }
-    });
-  }, []);
+  const user = useObservableState(UserStore.currentUser$);
 
   const toggleUser = () => {
-    if (isLoggedIn) {
+    if (user) {
       Auth.logOut().then(() => {
-        setIsLoggedIn(false);
-        setUser(null);
+        UserStore.logout();
         Alert.alert('User logged out');
       });
     } else {
@@ -34,7 +24,7 @@ export const Header: FC<HeaderProps> = (props) => {
     }
   };
 
-  const display = isLoggedIn ? user : props.message;
+  const display = user || props.message;
   return (
     <View style={styles.headStyle}>
       <Image style={styles.logoStyle} source={logo} />

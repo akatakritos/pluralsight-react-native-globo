@@ -7,6 +7,8 @@ import { Video } from './app/views/Video';
 import { VideoDetail } from './app/views/VideoDetail';
 import { Register } from './app/views/Register';
 import { Login } from './app/views/Login';
+import { Auth } from './app/auth';
+import { UserStore } from './app/UserStore';
 
 const AppNavigator = createStackNavigator(
   {
@@ -23,3 +25,9 @@ const AppNavigator = createStackNavigator(
 );
 
 export default createAppContainer(AppNavigator);
+
+Auth.getCurrentUser().then((result) => {
+  if (result.type === 'LoggedIn') {
+    UserStore.login(result.username);
+  }
+});

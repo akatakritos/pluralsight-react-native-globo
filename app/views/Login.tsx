@@ -4,6 +4,7 @@ import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
 import { hideHeader } from '../utils';
 import { Auth } from '../auth';
+import { UserStore } from '../UserStore';
 
 type LoginActions = { type: 'usernameUpdated'; username: string } | { type: 'passwordUpdated'; password: string };
 
@@ -50,6 +51,7 @@ export const Login: FC<LoginProps> = (props) => {
               Alert.alert(`No account for ${state.username}`);
             } else {
               Alert.alert(`${state.username} Logged In`);
+              UserStore.login(state.username);
               props.navigation.navigate('Home');
             }
           });
