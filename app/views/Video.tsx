@@ -1,52 +1,50 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { NavigationInjectedProps } from 'react-navigation';
-import { Item } from './models';
+import { Loader, useLoadingState } from './LoadingState';
 import { searchVideos } from './youtube-client';
 
 interface VideoProps extends NavigationInjectedProps {}
-export const Video: FC<VideoProps> = (props) => {
-  const [listLoaded, setListLoaded] = useState(false);
-  const [videos, setVideos] = useState([] as Item[]);
 
-  useEffect(() => {
-    searchVideos('react native')
-      .then((data) => {
-        setListLoaded(true);
-        setVideos(Array.from(data.items));
-      })
-      .catch((err) => console.error(err));
-  }, []);
+export const Video: FC<VideoProps> = (props) => {
+  const videos = useLoadingState(
+    (controller) => searchVideos('react native', controller).then((result) => result.items),
+    []
+  );
 
   const handlePress = (youtubeId: string) => {
-    console.log('navigate to ', youtubeId);
     props.navigation.navigate('VideoDetail', { youtubeId });
   };
 
   return (
     <View>
-      {listLoaded ? (
-        <View style={{ paddingTop: 30 }}>
-          <FlatList
-            data={videos}
-            keyExtractor={(item) => item.id.videoId}
-            renderItem={({ item }) => (
-              <TubeItem
-                key={item.id.videoId}
-                id={item.id.videoId}
-                title={item.snippet.title}
-                imageSrc={item.snippet.thumbnails.high.url}
-                onPress={() => handlePress(item.id.videoId)}
-              />
-            )}
-          />
-        </View>
-      ) : (
-        <View style={{ paddingTop: 30 }}>
-          <Text>LOADING</Text>
-        </View>
-      )}
+      <Loader
+        state={videos}
+        resolved={(items) => (
+          <View style={{ paddingTop: 30 }}>
+            <FlatList
+              data={items}
+              keyExtractor={(item) => item.id.videoId}
+              renderItem={({ item }) => (
+                <TubeItem
+                  key={item.id.videoId}
+                  id={item.id.videoId}
+                  title={item.snippet.title}
+                  imageSrc={item.snippet.thumbnails.high.url}
+                  onPress={() => handlePress(item.id.videoId)}
+                />
+              )}
+            />
+          </View>
+        )}
+        rejected={(err) => <Text>{err}</Text>}
+        loading={() => (
+          <View style={{ paddingTop: 30 }}>
+            <Text>LOADING</Text>
+          </View>
+        )}
+      />
     </View>
   );
 };
