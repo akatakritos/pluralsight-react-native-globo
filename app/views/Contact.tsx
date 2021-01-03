@@ -2,6 +2,7 @@ import React, { FC, useReducer } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavPropsFor } from '../routes';
+import { Colors } from '../style/colors';
 import { Header } from './Header';
 
 type Actions =
@@ -92,8 +93,8 @@ const styles = StyleSheet.create({
   inputs: {
     flex: 1,
     width: '80%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#000',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.black,
   },
   multiInput: {
     flex: 2,

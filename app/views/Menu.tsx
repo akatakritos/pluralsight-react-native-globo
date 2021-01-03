@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
 import { NavFn, NavPropsFor } from '../routes';
+import { Colors } from '../style/colors';
 
 type MenuProps = {
   navigate: NavFn;
@@ -44,11 +45,17 @@ export const Menu: FC<MenuProps> = ({ navigate }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 6,
-    backgroundColor: '#35605a',
+    backgroundColor: Colors.brandGreen,
   },
-  buttonRow: { flex: 2, flexDirection: 'row', alignItems: 'center', borderColor: '#fff', borderBottomWidth: 1 },
+  buttonRow: {
+    flex: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: Colors.white,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
   buttonStyles: {
-    backgroundColor: '#35605a',
+    backgroundColor: Colors.brandGreen,
     width: '50%',
     height: '50%',
     justifyContent: 'center',
@@ -56,6 +63,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    color: '#fff',
+    color: Colors.white,
   },
 });

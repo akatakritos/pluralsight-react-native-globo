@@ -1,6 +1,7 @@
 import { useObservableState } from 'observable-hooks';
 import React, { FC } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '../style/colors';
 import { Auth } from '../auth';
 import { NavFn } from '../routes';
 import { UserStore } from '../UserStore';
@@ -38,18 +39,18 @@ export const Header: FC<HeaderProps> = (props) => {
 const styles = StyleSheet.create({
   headText: {
     textAlign: 'right',
-    color: '#fff',
+    color: Colors.white,
     fontSize: 20,
     flex: 1,
   },
   headStyle: {
     paddingTop: 30,
     paddingRight: 10,
-    backgroundColor: '#35605a',
+    backgroundColor: Colors.brandGreen,
     flex: 1,
     flexDirection: 'row',
-    borderBottomColor: '#000',
-    borderBottomWidth: 2,
+    borderBottomColor: Colors.black,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   logoStyle: {
     flex: 1,
