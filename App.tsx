@@ -10,13 +10,17 @@ import { UserStore } from './app/UserStore';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { RouteParams } from './app/routes';
+import { navigationRef, RouteParams } from './app/routes';
+import { Header } from './app/views/Header';
+import { View } from 'react-native';
 
 const Stack = createStackNavigator<RouteParams>();
 
 const HideNavBar = {
   headerShown: false,
 };
+
+function noop() {}
 
 export default function App() {
   useEffect(() => {
@@ -28,15 +32,22 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} options={HideNavBar} />
-        <Stack.Screen name="Contact" component={Contact} options={HideNavBar} />
-        <Stack.Screen name="Video" component={Video} options={HideNavBar} />
-        <Stack.Screen name="VideoDetail" component={VideoDetail} />
-        <Stack.Screen name="Register" component={Register} options={HideNavBar} />
-        <Stack.Screen name="Login" component={Login} options={HideNavBar} />
-      </Stack.Navigator>
+    <NavigationContainer ref={navigationRef}>
+      <View style={{ flex: 1 }}>
+        <View style={{ height: '10%' }}>
+          <Header message="Login" />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Stack.Navigator initialRouteName="Home" screenOptions={HideNavBar}>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Contact" component={Contact} />
+            <Stack.Screen name="Video" component={Video} />
+            <Stack.Screen name="VideoDetail" component={VideoDetail} />
+            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="Login" component={Login} />
+          </Stack.Navigator>
+        </View>
+      </View>
     </NavigationContainer>
   );
 }

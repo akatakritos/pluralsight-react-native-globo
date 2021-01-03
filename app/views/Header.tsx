@@ -1,18 +1,18 @@
 import { useObservableState } from 'observable-hooks';
 import React, { FC } from 'react';
 import { Alert, Image, StyleSheet, Text, View } from 'react-native';
-import { Colors } from '../style/colors';
 import { Auth } from '../auth';
-import { NavFn } from '../routes';
+import { navigationRef } from '../routes';
+import { Colors } from '../style/colors';
 import { UserStore } from '../UserStore';
 const logo = require('./img/Globo_logo_REV.png');
 
 interface HeaderProps {
   message: string;
-  navigate: NavFn;
 }
 export const Header: FC<HeaderProps> = (props) => {
   const user = useObservableState(UserStore.currentUser$);
+  // const navigation = useNavigation<NavProp>();
 
   const toggleUser = () => {
     if (user) {
@@ -21,7 +21,7 @@ export const Header: FC<HeaderProps> = (props) => {
         Alert.alert('User logged out');
       });
     } else {
-      props.navigate('Login');
+      navigationRef.current?.navigate('Login');
     }
   };
 
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 20,
     flex: 1,
+    alignSelf: 'center',
   },
   headStyle: {
     paddingTop: 30,

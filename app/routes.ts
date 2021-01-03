@@ -1,4 +1,5 @@
-import { NavigationProp } from '@react-navigation/native';
+import React from 'react';
+import { NavigationContainerRef, NavigationProp } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 
 export type RouteParams = {
@@ -10,5 +11,8 @@ export type RouteParams = {
   Login: undefined;
 };
 
+export type NavProp = NavigationProp<RouteParams>;
 export type NavFn = NavigationProp<RouteParams>['navigate'];
 export type NavPropsFor<T extends keyof RouteParams> = StackScreenProps<RouteParams, T>;
+
+export const navigationRef = React.createRef<NavigationContainerRef>();

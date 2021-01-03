@@ -19,7 +19,6 @@ export const Home: FC<HomeProps> = (props) => {
 
   return (
     <View style={styles.container}>
-      <Header navigate={navigate} message="Press to Login" />
       <Hero />
       <Menu navigate={navigate} />
     </View>

@@ -1,5 +1,5 @@
 import React, { FC, useReducer } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, Alert, Button } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavPropsFor } from '../routes';
 import { Colors } from '../style/colors';
@@ -46,7 +46,6 @@ export const Contact: FC<ContactProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Header navigate={navigation.navigate} message="Press to Login" />
       <Text style={styles.heading}>Contact Us</Text>
 
       <TextInput
