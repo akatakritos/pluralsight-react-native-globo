@@ -4,6 +4,7 @@ import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { Auth } from '../auth';
 import { UserStore } from '../UserStore';
 import { NavPropsFor } from '../routes';
+import { GloboButton } from './widgets/GloboButton';
 
 type LoginActions = { type: 'usernameUpdated'; username: string } | { type: 'passwordUpdated'; password: string };
 
@@ -78,13 +79,8 @@ export const Login: FC<LoginProps> = (props) => {
       />
       <Text style={styles.label}>Enter Password</Text>
 
-      <TouchableHighlight onPress={login} underlayColor="#31e981">
-        <Text style={styles.button}>Log On</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight onPress={cancelLogin} underlayColor="#31e981">
-        <Text style={styles.button}>Cancel</Text>
-      </TouchableHighlight>
+      <GloboButton type="primary" text="Log On" onPress={login} style={styles.button} />
+      <GloboButton type="secondary" text="Cancel" onPress={cancelLogin} style={styles.button} />
     </View>
   );
 };
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   button: {
-    marginTop: 15,
-    fontSize: 16,
+    marginTop: 10,
+    minWidth: 150,
   },
 });

@@ -4,6 +4,7 @@ import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { NavPropsFor } from '../routes';
 import { Colors } from '../style/colors';
 import { Header } from './Header';
+import { GloboButton } from './widgets/GloboButton';
 
 type Actions =
   | { type: 'messageChanged'; payload: string }
@@ -68,13 +69,8 @@ export const Contact: FC<ContactProps> = ({ navigation }) => {
         value={state.email}
       />
 
-      <TouchableHighlight onPress={sendMessage} underlayColor="#31e981">
-        <Text style={styles.buttons}>Send Message</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight onPress={() => dispatch({ type: 'clear' })} underlayColor="#31e981">
-        <Text style={styles.buttons}>Reset</Text>
-      </TouchableHighlight>
+      <GloboButton type="primary" text="Send Message" style={styles.buttons} onPress={sendMessage} />
+      <GloboButton type="secondary" text="Reset" style={styles.buttons} onPress={() => dispatch({ type: 'clear' })} />
     </View>
   );
 };
@@ -100,7 +96,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   buttons: {
-    marginTop: 15,
-    fontSize: 16,
+    marginTop: 10,
+    minWidth: 150,
   },
 });

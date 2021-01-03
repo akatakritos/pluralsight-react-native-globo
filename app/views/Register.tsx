@@ -3,6 +3,7 @@ import { Alert, StyleSheet, View, Text } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { Auth } from '../auth';
 import { NavPropsFor } from '../routes';
+import { GloboButton } from './widgets/GloboButton';
 
 type RegisterActions =
   | { type: 'usernameUpdated'; username: string }
@@ -83,13 +84,8 @@ export const Register: FC<RegisterProps> = (props) => {
       />
       <Text style={styles.label}>Confirm Password</Text>
 
-      <TouchableHighlight onPress={registerAccount} underlayColor="#31e981">
-        <Text style={styles.button}>Register</Text>
-      </TouchableHighlight>
-
-      <TouchableHighlight onPress={cancelRegister} underlayColor="#31e981">
-        <Text style={styles.button}>Cancel</Text>
-      </TouchableHighlight>
+      <GloboButton type="primary" text="Register" onPress={registerAccount} style={styles.button} />
+      <GloboButton type="secondary" text="Cancel" onPress={cancelRegister} style={styles.button} />
     </View>
   );
 };
@@ -114,7 +110,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   button: {
-    marginTop: 15,
-    fontSize: 16,
+    marginTop: 10,
+    minWidth: 150,
   },
 });
