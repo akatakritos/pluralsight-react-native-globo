@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { FlatList, Image, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { NavigationInjectedProps } from 'react-navigation';
 import { Loader, useLoadingState } from '../LoadingState';
+import { NavPropsFor } from '../routes';
 import { searchVideos } from './youtube-client';
 
-interface VideoProps extends NavigationInjectedProps {}
+type VideoProps = NavPropsFor<'Video'>;
 
 export const Video: FC<VideoProps> = (props) => {
   const videos = useLoadingState(
@@ -47,10 +47,6 @@ export const Video: FC<VideoProps> = (props) => {
       />
     </View>
   );
-};
-
-(Video as any).navigationOptions = {
-  headerShown: false,
 };
 
 const TubeItem: FC<{ id: string; title: string; imageSrc: string; onPress: () => void }> = (props) => {

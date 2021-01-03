@@ -1,10 +1,9 @@
 import React, { FC, useReducer } from 'react';
 import { Alert, StyleSheet, View, Text } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
-import { NavigationInjectedProps } from 'react-navigation';
-import { hideHeader } from '../utils';
 import { Auth } from '../auth';
 import { UserStore } from '../UserStore';
+import { NavPropsFor } from '../routes';
 
 type LoginActions = { type: 'usernameUpdated'; username: string } | { type: 'passwordUpdated'; password: string };
 
@@ -24,7 +23,7 @@ function reducer(state: LoginState, action: LoginActions): LoginState {
   }
 }
 
-interface LoginProps extends NavigationInjectedProps {}
+type LoginProps = NavPropsFor<'Login'>;
 export const Login: FC<LoginProps> = (props) => {
   const [state, dispatch] = useReducer(reducer, LoginDefaultState);
 
@@ -114,5 +113,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-hideHeader(Login);

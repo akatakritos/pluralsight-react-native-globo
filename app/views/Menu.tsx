@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import { Alert, StyleSheet, TouchableOpacity, View, Text } from 'react-native';
+import { NavFn, NavPropsFor } from '../routes';
 
-interface MenuProps {
-  navigate: (routeName: string) => void;
-}
+type MenuProps = {
+  navigate: NavFn;
+};
 
 export const Menu: FC<MenuProps> = ({ navigate }) => {
   const onPress = () => Alert.alert('You tapped the button');

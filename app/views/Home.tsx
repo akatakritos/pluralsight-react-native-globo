@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
+import { NavPropsFor } from '../routes';
 import { Header } from './Header';
 import { Hero } from './Hero';
 import { Menu } from './Menu';
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 
-interface HomeProps extends NavigationInjectedProps {}
+type HomeProps = NavPropsFor<'Home'>;
 export const Home: FC<HomeProps> = (props) => {
   const { navigate } = props.navigation;
 
@@ -23,8 +23,4 @@ export const Home: FC<HomeProps> = (props) => {
       <Menu navigate={navigate} />
     </View>
   );
-};
-
-(Home as any).navigationOptions = {
-  headerShown: false,
 };

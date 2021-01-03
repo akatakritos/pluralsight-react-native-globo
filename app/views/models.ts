@@ -58,5 +58,3 @@ export interface VideoSearchResult {
   pageInfo: PageInfo;
   items: Item[];
 }
-
-export type NavigateFn = (routeName: string, args?: any) => void;

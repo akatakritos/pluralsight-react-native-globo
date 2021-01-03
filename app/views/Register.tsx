@@ -1,9 +1,8 @@
 import React, { FC, useReducer } from 'react';
 import { Alert, StyleSheet, View, Text } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
-import { NavigationInjectedProps } from 'react-navigation';
-import { hideHeader } from '../utils';
 import { Auth } from '../auth';
+import { NavPropsFor } from '../routes';
 
 type RegisterActions =
   | { type: 'usernameUpdated'; username: string }
@@ -29,7 +28,7 @@ function reducer(state: RegisterState, action: RegisterActions): RegisterState {
   }
 }
 
-interface RegisterProps extends NavigationInjectedProps {}
+type RegisterProps = NavPropsFor<'Register'>;
 export const Register: FC<RegisterProps> = (props) => {
   const [state, dispatch] = useReducer(reducer, RegisterDefaultState);
 
@@ -119,5 +118,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-hideHeader(Register);

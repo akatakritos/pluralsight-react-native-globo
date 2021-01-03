@@ -1,7 +1,7 @@
 import React, { FC, useReducer } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
-import { NavigationInjectedProps } from 'react-navigation';
+import { NavPropsFor } from '../routes';
 import { Header } from './Header';
 
 type Actions =
@@ -29,7 +29,7 @@ function reducer(state: ContactState, action: Actions): ContactState {
   }
 }
 
-interface ContactProps extends NavigationInjectedProps {}
+type ContactProps = NavPropsFor<'Contact'>;
 
 export const Contact: FC<ContactProps> = ({ navigation }) => {
   const [state, dispatch] = useReducer(reducer, {
@@ -77,10 +77,6 @@ export const Contact: FC<ContactProps> = ({ navigation }) => {
       </TouchableHighlight>
     </View>
   );
-};
-
-(Contact as any).navigationOptions = {
-  headerShown: false,
 };
 
 const styles = StyleSheet.create({

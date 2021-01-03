@@ -1,14 +1,14 @@
-import React, { FC, useEffect, useState } from 'react';
-import { Text, StyleSheet, View, Image, Alert } from 'react-native';
-import { NavigateFn } from './models';
+import { useObservableState } from 'observable-hooks';
+import React, { FC } from 'react';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
 import { Auth } from '../auth';
-const logo = require('./img/Globo_logo_REV.png');
-import { useObservable, useObservableState } from 'observable-hooks';
+import { NavFn } from '../routes';
 import { UserStore } from '../UserStore';
+const logo = require('./img/Globo_logo_REV.png');
 
 interface HeaderProps {
   message: string;
-  navigate: NavigateFn;
+  navigate: NavFn;
 }
 export const Header: FC<HeaderProps> = (props) => {
   const user = useObservableState(UserStore.currentUser$);
