@@ -4,6 +4,7 @@ import { TextInput, TouchableHighlight } from 'react-native-gesture-handler';
 import { Auth } from '../auth';
 import { NavPropsFor } from '../routes';
 import { GloboButton } from './widgets/GloboButton';
+import { GloboTextInput } from './widgets/GloboTextInput';
 
 type RegisterActions =
   | { type: 'usernameUpdated'; username: string }
@@ -61,28 +62,28 @@ export const Register: FC<RegisterProps> = (props) => {
     <View style={styles.container}>
       <Text style={styles.heading}>Register Account</Text>
 
-      <TextInput
+      <GloboTextInput
         style={styles.inputs}
+        placeholder="Username"
         onChangeText={(username) => dispatch({ type: 'usernameUpdated', username })}
         value={state.username}
       />
-      <Text style={styles.label}>Enter Username</Text>
 
-      <TextInput
+      <GloboTextInput
+        placeholder="Password"
         style={styles.inputs}
         onChangeText={(password) => dispatch({ type: 'passwordUpdated', password })}
         value={state.password}
         secureTextEntry={true}
       />
-      <Text style={styles.label}>Enter Password</Text>
 
-      <TextInput
+      <GloboTextInput
+        placeholder="Confirm Password"
         style={styles.inputs}
         onChangeText={(passwordConfirmation) => dispatch({ type: 'passwordConfirmationUpdated', passwordConfirmation })}
         value={state.passwordConfirmation}
         secureTextEntry={true}
       />
-      <Text style={styles.label}>Confirm Password</Text>
 
       <GloboButton type="primary" text="Register" onPress={registerAccount} style={styles.button} />
       <GloboButton type="secondary" text="Cancel" onPress={cancelRegister} style={styles.button} />
@@ -102,9 +103,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputs: {
-    flex: 1,
     width: '80%',
-    padding: 10,
   },
   label: {
     paddingBottom: 10,
